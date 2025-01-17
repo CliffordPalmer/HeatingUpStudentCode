@@ -1,9 +1,11 @@
 Name: YOUR NAME HERE
 
-| Date    |  Time  |                                     Update |
-|:--------|:------:|-------------------------------------------:|
-| April 5 | 9-10pm | I tried to write abstract, efficient code. |
-|         |        |                                            |
+| Date       |     Time     |                                                                                                                                                                                                                                                                                                                                                                       Update |
+|:-----------|:------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| April 5    |    9-10pm    |                                                                                                                                                                                                                                                                                                                                   I tried to write abstract, efficient code. |
+| January 14 | 2:30-3:00pm  |                                                                                                                                                                                 Problem set was announced today. Spent the last half of class ideating with my tablemates. Currently considering going backwards, and using the fact that sequences are built on each other. |
+| January 15 | 12:35-1:00pm | Slightly shifted our theory. Talked with Sierra, Lucas, and Cody, realizing that we can just start from the beginning, and then for every temperature, search all the temperatures lower than it that come earlier, and use the longest existing sequence and add one. Using the debugger, I'm getting a bug where the length of sequences is saving as zero no matter what. |
+| January 16 | 1:00-1:30pm  |                                                                                                                          It works! It took a little using of the debugger to pinpoint the problem: I wasn't assigning the first temperature any run length. A few more bugs popped up, but with those fixed, it passes the checks. Now I have to work on speeding things up. |
 
 
 To add a new row to the table, click into a cell and then hit shift-enter.
