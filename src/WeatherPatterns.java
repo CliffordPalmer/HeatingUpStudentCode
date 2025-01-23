@@ -17,38 +17,53 @@ public class WeatherPatterns {
      * @return the longest run of days with increasing temperatures
      */
     public static int longestWarmingTrend(int[] temperatures) {
-        ArrayList<int[]> orderedRuns = new ArrayList<int[]>();
-        int[] runPair = new int[2];
-        runPair[0] = temperatures[0];
-        runPair[1] = 1;
-        orderedRuns.add(runPair);
-        int[] info = new int[temperatures.length];
-        int maxRun;
+        // Arrays to hold the length of runs and the visited status of temperatures
+        int[] runs = new int[temperatures.length];
+        boolean[] visited = new boolean[temperatures.length];
+        // Adjacency list: an array of ArrayLists which records each node's leading connections
+        ArrayList<Integer>[] adjacencyList= new ArrayList[temperatures.length];
+        // Initialize adjacency list with ArrayList objects
+        for(int i = 0; i < temperatures.length; i++){
+            adjacencyList[i] = new ArrayList<>();
+        }
+        // Build adjacency list
         for(int i = 0; i < temperatures.length; i++) {
-            runPair = new int[2];
-            runPair[0] = temperatures[i];
-            maxRun = 0;
-//            for (int j = 0; j < i; j++) {
-//                if(temperatures[j] < temperatures[i] && info[j] > maxRun) {
-//                    maxRun = info[j];
-//                }
-//            }
-            int j = 0;
-            while(orderedRuns.get(j)[0] < temperatures[i] && j < i){
-                if(orderedRuns.get(j)[0] < temperatures[i] && orderedRuns.get(j)[1] > maxRun) {
-                    maxRun = orderedRuns.get(j)[1];
+            for (int j = 0; j < i; j++) {
+                // Add temperatures lower than the current temperature
+                if(temperatures[j] < temperatures[i]) {
+                    adjacencyList[i].add(j);
                 }
-                j++;
             }
-            runPair[1] = maxRun + 1;
-            orderedRuns.add(j, runPair);
         }
+        // For each temperature, call a recursive calculation of the run
+        for(int i = 0; i < temperatures.length; i++){
+            runs[i] = LongestPathTo(i, visited, runs, adjacencyList);
+            visited[i] = true;
+        }
+        // Find the longest run
         int max = 0;
-        for(int i = 0; i < info.length; i++){
-            if(info[i] > max){
-                maxRun = info[i];
+        for(int i = 0; i < runs.length; i++){
+            if(runs[i] > max){
+                max = runs[i];
             }
         }
+        // Return the longest run
         return max;
     }
+    // Recursive function which calculates the run length for a specific temperature
+    public static int LongestPathTo(int index, boolean[] visited, int[] runs, ArrayList<Integer>[] adjacencyList){
+        // Base case: skip the recursive calls if the index has been visited
+        if(visited[index] == true){
+            return runs[index];
+        }
+        int len = 0;
+        // Check every temperature in the adjacency list for the longest run so far
+        for(int i = 0; i < adjacencyList[index].size(); i++){
+            len = Math.max(len, LongestPathTo(adjacencyList[index].get(i), visited, runs, adjacencyList));
+        }
+        // Add the current temperature to the run and return the run length
+        return 1 + len;
+    }
 }
+
+
